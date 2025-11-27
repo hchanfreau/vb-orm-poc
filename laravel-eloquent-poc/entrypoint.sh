@@ -33,14 +33,10 @@ chown -R laradock:www-data storage bootstrap/cache
 chown -R laradock:www-data database
 echo "FINISHED: setting permissions for Laravel directories"
 
-# Run database migrations
-echo "STARTING: database migrations"
-php artisan migrate --force
-echo "FINISHED: database migrations"
-
-# Seed the database (optional, only if you have seeders)
-# echo "Seeding database..."
-# php artisan db:seed --force
+# Run database migrations and seed the database
+echo "STARTING: database migrations and seeding"
+php artisan migrate:fresh --seed --force
+echo "FINISHED: database migrations and seeding"
 
 # Execute the original command (php-fpm in this case)
 exec "$@"
