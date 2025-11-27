@@ -17,6 +17,7 @@ services:
       - ./:/var/www/html
     networks:
       - app-network
+    entrypoint: ["./entrypoint.sh"]
 
   # Servidor web Nginx
   web:
