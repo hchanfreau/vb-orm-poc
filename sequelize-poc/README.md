@@ -57,6 +57,16 @@ El proyecto está configurado para ejecutarse completamente dentro de contenedor
     docker compose down
     ```
 
+## Puntos Clave del Código y Documentación
+
+*   **Lazy Loading**: El ejemplo de carga perezosa se encuentra en `src/lazy-loading-example.js`. La carga de relaciones se dispara con llamadas a métodos `get<Association>()`, como `await user.getPosts()`, que ejecutan consultas adicionales bajo demanda.
+*   **Eager Loading**: El cambio a carga ansiosa se realiza en `src/eager-loading-example.js`. En lugar de llamadas a métodos `get`, se utiliza la opción `include` dentro de la consulta principal (`User.findAll`). Esto le indica a Sequelize que obtenga las relaciones deseadas en la misma consulta inicial.
+
+### Documentación Oficial de Sequelize
+
+*   **Lazy Loading**: [Conceptos Básicos de Asociaciones: Carga Perezosa](https://sequelize.org/docs/v6/core-concepts/assocs/#lazy-loading-example)
+*   **Eager Loading**: [Conceptos Básicos de Asociaciones: Carga Ansiosa](https://sequelize.org/docs/v6/core-concepts/assocs/#eager-loading)
+
 ## Entendiendo la Carga Perezosa vs. Carga Ansiosa
 
 *   **Carga Perezosa (Lazy Loading):** Los datos relacionados (por ejemplo, las publicaciones de un usuario) solo se obtienen de la base de datos cuando se accede a ellos explícitamente. Aunque aparentemente eficiente para accesos individuales, iterar a través de una colección de objetos principales y acceder a una colección relacionada en cada uno resultará en un "problema N+1" (N consultas para los datos relacionados + 1 consulta para los datos principales). Esto puede degradar significativamente el rendimiento.

@@ -12,6 +12,19 @@ Este proyecto es una Prueba de Concepto (POC) de una aplicación Laravel diseña
 *   **Logging de Consultas:** Configurado para mostrar todas las consultas SQL ejecutadas directamente en los logs de Docker, con marcadores claros para cada demostración.
 *   **Tests de Funcionalidad:** Para verificar que las rutas funcionan y devuelven la estructura de datos esperada.
 
+## Puntos Clave del Código y Documentación
+
+Toda la lógica de carga de datos se encuentra en el fichero `routes/web.php`.
+
+*   **Lazy Loading**: La ruta `/lazy-orm` demuestra la carga perezosa. Primero obtiene todos los usuarios (`App\Models\User::all()`) y luego, dentro de un bucle, accede a las relaciones de cada usuario (ej: `$user->posts`). Cada uno de estos accesos dispara una nueva consulta a la base de datos, causando el problema N+1.
+*   **Eager Loading**: La ruta `/test-orm` demuestra la carga ansiosa. La transición a este modo se logra utilizando el método `with()` antes de ejecutar la consulta (`App\Models\User::with([...])->get()`). Esto le indica a Eloquent que cargue todas las relaciones especificadas en un número mínimo y optimizado de consultas.
+
+### Documentación Oficial de Eloquent
+
+Para una explicación más profunda sobre cómo Eloquent maneja la carga de relaciones, consulta la documentación oficial. El concepto de "Lazy Loading" es el comportamiento por defecto, mientras que "Eager Loading" es la solución explícita al problema de N+1.
+
+*   **Eager Loading en Laravel Eloquent**: [Documentación de Eager Loading](https://laravel.com/docs/eloquent-relationships#eager-loading)
+
 ## Configuración del Entorno
 
 Asegúrate de tener Docker y Docker Compose instalados en tu sistema.
